@@ -14,16 +14,17 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import java.util.*
 import java.util.stream.Collectors
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtUtil(@Value("\${kotlin-blog.jwt.secret}") val tokenTime: Long) {
+class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
     fun refreshToken(
             request:HttpServletRequest,
             response:HttpServletResponse,
             userService: UserService
     ) {
+        val tokenTime = timeProperty.toLong()
         val authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
@@ -65,6 +66,7 @@ class JwtUtil(@Value("\${kotlin-blog.jwt.secret}") val tokenTime: Long) {
         request: HttpServletRequest,
         response: HttpServletResponse
     ) {
+        val tokenTime = timeProperty.toLong()
         val user = authentication.principal as User
         val algorithm = Algorithm.HMAC256("secret".toByteArray())
 

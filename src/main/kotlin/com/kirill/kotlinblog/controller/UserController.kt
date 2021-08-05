@@ -1,23 +1,14 @@
 package com.kirill.kotlinblog.controller
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.kirill.kotlinblog.domain.Role
 import com.kirill.kotlinblog.domain.User
 import com.kirill.kotlinblog.domain.enum.ERole
 import com.kirill.kotlinblog.service.UserService
 import com.kirill.kotlinblog.utils.JwtUtil
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
-import java.util.*
-import java.util.stream.Collectors
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -30,7 +21,7 @@ data class UserController(val userService: UserService,
     fun saveUser(@RequestBody user:User): ResponseEntity<*>{
         val uri = URI
             .create(ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/api/user/save")
+            .path("/api/users/save")
             .toUriString())
 
         return ResponseEntity.created(uri).body(userService.saveUser(user))

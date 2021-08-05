@@ -7,15 +7,9 @@ import com.kirill.kotlinblog.repository.RoleRepository
 import com.kirill.kotlinblog.repository.UserRepository
 import com.kirill.kotlinblog.service.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
-import java.util.function.Consumer
 
 @Service
 @Transactional
@@ -42,13 +36,11 @@ class UserServiceImpl(val userRepo : UserRepository,
 
     override fun saveUser(user: User): User {
         //if (userRepo.findByUsername(user.password).username == user.username) {
-            //return ResponseEntity.badRequest().body("Username already taken")
+            //throw RuntimeException("Username already taken")
         //}
         user.password = passwordEncoder.encode(user.password)
         user.roles.add(roleRepo.findByRole(ERole.ROLE_USER))
         return userRepo.save(user)
-
-        //return ResponseEntity.ok().body("User saved successfully")
     }
 
     override fun deleteById(id: Long) :ResponseEntity<*>{
