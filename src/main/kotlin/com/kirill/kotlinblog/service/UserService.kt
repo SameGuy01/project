@@ -15,6 +15,6 @@ interface UserService{
     fun getUsers():List<User>
     fun saveUser(user : User): User
     fun deleteById(id: Long): ResponseEntity<*>
-    fun update(user: User)
+    fun update(user: User): User
     fun addRoleToUser(username:String,roleName:ERole)
 }

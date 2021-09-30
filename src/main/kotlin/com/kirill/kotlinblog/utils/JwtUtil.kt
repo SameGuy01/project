@@ -1,4 +1,4 @@
-package com.kirill.kotlinblog.utils;
+package com.kirill.kotlinblog.utils
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
@@ -24,7 +24,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
             response:HttpServletResponse,
             userService: UserService
     ) {
-        val tokenTime = timeProperty.toLong()
+        //val tokenTime = timeProperty.toLong()
         val authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
@@ -37,7 +37,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
 
                 val accessToken = JWT.create()
                         .withSubject(user.username)
-                        .withExpiresAt(Date(System.currentTimeMillis() + tokenTime))
+                        .withExpiresAt(Date(System.currentTimeMillis() + 10000))
                         .withIssuer(request.requestURL.toString())
                         .withClaim("roles", user.roles.stream().map { it.role.name }.collect(Collectors.toList()))
                     .sign(algorithm)
@@ -66,13 +66,13 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
         request: HttpServletRequest,
         response: HttpServletResponse
     ) {
-        val tokenTime = timeProperty.toLong()
+        //val tokenTime = timeProperty.toLong()
         val user = authentication.principal as User
         val algorithm = Algorithm.HMAC256("secret".toByteArray())
 
         val accessToken = JWT.create()
             .withSubject(user.username)
-            .withExpiresAt(Date(System.currentTimeMillis() + tokenTime))
+            .withExpiresAt(Date(System.currentTimeMillis() + 10000))
             .withIssuer(request.requestURL.toString())
             .withClaim(
                 "roles",
@@ -82,7 +82,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
 
         val refreshToken = JWT.create()
             .withSubject(user.username)
-            .withExpiresAt(Date(System.currentTimeMillis() + tokenTime))
+            .withExpiresAt(Date(System.currentTimeMillis() + 10000))
             .withIssuer(request.requestURL.toString())
             .sign(algorithm)
 

@@ -42,6 +42,11 @@ data class UserController(val userService: UserService,
         return ResponseEntity.created(uri).body(userService.saveRole(role))
     }
 
+    @PutMapping("/users/update")
+    fun updateUser(@RequestBody user: User): ResponseEntity<User>{
+        return ResponseEntity.ok().body(userService.update(user))
+    }
+
     @PostMapping("/role/addtouser")
     fun addRoleToUser(@RequestBody form:RoleToUserForm): ResponseEntity<Unit>{
         userService.addRoleToUser(form.username, form.roleName)
