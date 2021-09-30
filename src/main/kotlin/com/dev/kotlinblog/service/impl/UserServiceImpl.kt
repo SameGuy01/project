@@ -1,11 +1,12 @@
-package com.kirill.kotlinblog.service.impl
+package com.dev.kotlinblog.service.impl
 
-import com.kirill.kotlinblog.domain.Role
-import com.kirill.kotlinblog.domain.User
-import com.kirill.kotlinblog.domain.enum.ERole
-import com.kirill.kotlinblog.repository.RoleRepository
-import com.kirill.kotlinblog.repository.UserRepository
-import com.kirill.kotlinblog.service.UserService
+import com.dev.kotlinblog.domain.Role
+import com.dev.kotlinblog.domain.User
+import com.dev.kotlinblog.domain.dto.UpdateUserDto
+import com.dev.kotlinblog.domain.enum.ERole
+import com.dev.kotlinblog.repository.RoleRepository
+import com.dev.kotlinblog.repository.UserRepository
+import com.dev.kotlinblog.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -28,7 +29,7 @@ class UserServiceImpl(val userRepo: UserRepository,
         return ResponseEntity.ok().body(userRepo.findById(id).orElseThrow())
     }
 
-    override fun getUserByUsername(username: String): User {
+    override fun getUserByUsername(username: String): User? {
         return userRepo.findByUsername(username)
     }
 
@@ -52,8 +53,8 @@ class UserServiceImpl(val userRepo: UserRepository,
         return ResponseEntity.ok().body("User with id: "+id+"successfully removed")
     }
 
-    override fun update(user: User): User {
-        return user
+    override fun update(user: User): User? {
+        return userRepo.save(user)
     }
 
     override fun addRoleToUser(username: String, roleName: ERole) {

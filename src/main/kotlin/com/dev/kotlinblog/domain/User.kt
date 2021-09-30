@@ -1,4 +1,4 @@
-package com.kirill.kotlinblog.domain
+package com.dev.kotlinblog.domain
 
 import javax.persistence.*
 

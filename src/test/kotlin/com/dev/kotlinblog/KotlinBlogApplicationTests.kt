@@ -1,4 +1,4 @@
-package com.kirill.kotlinblog
+package com.dev.kotlinblog
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

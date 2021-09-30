@@ -1,6 +1,6 @@
-package com.kirill.kotlinblog.service.impl
+package com.dev.kotlinblog.service.impl
 
-import com.kirill.kotlinblog.repository.UserRepository
+import com.dev.kotlinblog.repository.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

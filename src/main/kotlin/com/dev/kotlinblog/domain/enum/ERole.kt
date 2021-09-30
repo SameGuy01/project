@@ -1,4 +1,4 @@
-package com.kirill.kotlinblog.domain.enum
+package com.dev.kotlinblog.domain.enum
 
 enum class ERole {
     ROLE_ADMIN,

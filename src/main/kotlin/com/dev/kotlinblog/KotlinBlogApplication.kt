@@ -1,9 +1,9 @@
-package com.kirill.kotlinblog
+package com.dev.kotlinblog
 
-import com.kirill.kotlinblog.domain.Role
-import com.kirill.kotlinblog.domain.User
-import com.kirill.kotlinblog.domain.enum.ERole
-import com.kirill.kotlinblog.service.UserService
+import com.dev.kotlinblog.domain.Role
+import com.dev.kotlinblog.domain.User
+import com.dev.kotlinblog.domain.enum.ERole
+import com.dev.kotlinblog.service.UserService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

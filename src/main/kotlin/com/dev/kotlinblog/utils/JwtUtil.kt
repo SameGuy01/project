@@ -1,9 +1,9 @@
-package com.kirill.kotlinblog.utils
+package com.dev.kotlinblog.utils
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.kirill.kotlinblog.service.UserService
+import com.dev.kotlinblog.service.UserService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -36,7 +36,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
                 val user = userService.getUserByUsername(username)
 
                 val accessToken = JWT.create()
-                        .withSubject(user.username)
+                        .withSubject(user!!.username)
                         .withExpiresAt(Date(System.currentTimeMillis() + 10000))
                         .withIssuer(request.requestURL.toString())
                         .withClaim("roles", user.roles.stream().map { it.role.name }.collect(Collectors.toList()))

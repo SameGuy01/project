@@ -1,10 +1,11 @@
-package com.kirill.kotlinblog.controller
+package com.dev.kotlinblog.controller
 
-import com.kirill.kotlinblog.domain.Role
-import com.kirill.kotlinblog.domain.User
-import com.kirill.kotlinblog.domain.enum.ERole
-import com.kirill.kotlinblog.service.UserService
-import com.kirill.kotlinblog.utils.JwtUtil
+import com.dev.kotlinblog.domain.Role
+import com.dev.kotlinblog.domain.User
+import com.dev.kotlinblog.domain.dto.UpdateUserDto
+import com.dev.kotlinblog.domain.enum.ERole
+import com.dev.kotlinblog.service.UserService
+import com.dev.kotlinblog.utils.JwtUtil
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -15,10 +16,11 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 @RequestMapping("/api")
 data class UserController(val userService: UserService,
-                          val jwtUtil: JwtUtil) {
+                          val jwtUtil: JwtUtil
+) {
 
     @PostMapping("/users/save")
-    fun saveUser(@RequestBody user:User): ResponseEntity<*>{
+    fun saveUser(@RequestBody user: User): ResponseEntity<*>{
         val uri = URI
             .create(ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("/api/users/save")
@@ -33,7 +35,7 @@ data class UserController(val userService: UserService,
     }
 
     @PostMapping("/role/save")
-    fun saveRole(@RequestBody role:Role): ResponseEntity<Role>{
+    fun saveRole(@RequestBody role: Role): ResponseEntity<Role>{
         val uri = URI
                 .create(ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/role/save")
@@ -48,7 +50,7 @@ data class UserController(val userService: UserService,
     }
 
     @PostMapping("/role/addtouser")
-    fun addRoleToUser(@RequestBody form:RoleToUserForm): ResponseEntity<Unit>{
+    fun addRoleToUser(@RequestBody form: RoleToUserForm): ResponseEntity<Unit>{
         userService.addRoleToUser(form.username, form.roleName)
         return ResponseEntity.ok().build()
     }
@@ -60,6 +62,6 @@ data class UserController(val userService: UserService,
 
     data class RoleToUserForm(
         val username:String,
-        val roleName:ERole
+        val roleName: ERole
     )
 }

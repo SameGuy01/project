@@ -1,6 +1,6 @@
-package com.kirill.kotlinblog.domain
+package com.dev.kotlinblog.domain
 
-import com.kirill.kotlinblog.domain.enum.ERole
+import com.dev.kotlinblog.domain.enum.ERole
 import javax.persistence.*
 
 @Entity
@@ -10,5 +10,6 @@ data class Role(
     val id:Long,
 
     @Enumerated
-    val role:ERole) {
+    val role: ERole
+) {
 }

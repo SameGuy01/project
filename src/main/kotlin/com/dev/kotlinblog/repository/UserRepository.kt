@@ -1,6 +1,6 @@
-package com.kirill.kotlinblog.repository
+package com.dev.kotlinblog.repository
 
-import com.kirill.kotlinblog.domain.User
+import com.dev.kotlinblog.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.*

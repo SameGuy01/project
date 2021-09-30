@@ -1,6 +1,6 @@
-package com.kirill.kotlinblog.filter
+package com.dev.kotlinblog.filter
 
-import com.kirill.kotlinblog.utils.JwtUtil
+import com.dev.kotlinblog.utils.JwtUtil
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class CustomAuthenticationFilter(private val authManager: AuthenticationManager,
-                                 private val jwtUtil: JwtUtil) : UsernamePasswordAuthenticationFilter() {
+                                 private val jwtUtil: JwtUtil
+) : UsernamePasswordAuthenticationFilter() {
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         val username = request.getParameter("username")
