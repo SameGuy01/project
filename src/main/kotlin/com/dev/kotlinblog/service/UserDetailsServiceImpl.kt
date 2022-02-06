@@ -1,4 +1,4 @@
-package com.kirill.kotlinblog.service
+package com.dev.kotlinblog.service
 
 import com.kirill.kotlinblog.repository.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority

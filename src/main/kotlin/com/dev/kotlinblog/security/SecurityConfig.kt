@@ -1,8 +1,8 @@
-package com.kirill.kotlinblog.security
+package com.dev.kotlinblog.security
 
-import com.kirill.kotlinblog.filter.CustomAuthenticationFilter
-import com.kirill.kotlinblog.filter.CustomAuthorizationFilter
-import com.kirill.kotlinblog.utils.JwtUtil
+import com.dev.kotlinblog.filter.CustomAuthenticationFilter
+import com.dev.kotlinblog.filter.CustomAuthorizationFilter
+import com.dev.kotlinblog.utils.JwtUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
@@ -19,7 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 data class SecurityConfig(
     val userDetailsService: UserDetailsService,
     val bCryptPasswordEncoder: BCryptPasswordEncoder,
-    val jwtUtils: JwtUtil) : WebSecurityConfigurerAdapter(){
+    val jwtUtils: JwtUtil
+) : WebSecurityConfigurerAdapter(){
 
 
     override fun configure(auth: AuthenticationManagerBuilder) {

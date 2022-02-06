@@ -1,4 +1,4 @@
-package com.kirill.kotlinblog.filter
+package com.dev.kotlinblog.filter
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

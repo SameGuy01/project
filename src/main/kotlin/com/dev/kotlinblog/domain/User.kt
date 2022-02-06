@@ -1,5 +1,6 @@
-package com.kirill.kotlinblog.domain
+package com.dev.kotlinblog.domain
 
+import com.kirill.kotlinblog.domain.Role
 import javax.persistence.*
 
 @Entity
