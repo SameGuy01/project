@@ -22,6 +22,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-security:2.5.3")
 	implementation("org.springframework.boot:spring-boot-devtools:2.5.3")
+	implementation("org.modelmapper:modelmapper:2.4.4")
+	implementation("org.flywaydb:flyway-core:7.12.0")
 	implementation("com.auth0:java-jwt:3.18.1")
 	implementation("org.postgresql:postgresql:42.2.23")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

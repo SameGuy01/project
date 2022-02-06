@@ -34,6 +34,7 @@ class CustomAuthorizationFilter : OncePerRequestFilter() {
                     val verifier =  JWT.require(algorithm).build()
                     val decodedJWT = verifier.verify(token)
                     val username = decodedJWT.subject
+
                     val roles = decodedJWT.getClaim("roles").asArray(String::class.java)
                     val authorities = mutableSetOf<SimpleGrantedAuthority>()
                     stream(roles).forEach {
@@ -44,15 +45,15 @@ class CustomAuthorizationFilter : OncePerRequestFilter() {
                     filterChain.doFilter(request,response)
                 } catch (e: Exception){
                     println("Error logging in: "+e.message)
-                    response.setHeader("error",e.message)
+                    response.setHeader(HttpStatus.UNAUTHORIZED.name,e.message)
                     response.status = HttpStatus.FORBIDDEN.value()
-                    //response.sendError(HttpStatus.FORBIDDEN.value())
-                    val error = mutableMapOf<String,String>()
-                    error["error_message"] = e.message.toString()
                     response.contentType = MediaType.APPLICATION_JSON_VALUE
+
+                    //response.sendError(HttpStatus.FORBIDDEN.value())
+                    val error = mapOf("error_message" to e.message.toString())
                     ObjectMapper().writeValue(response.outputStream,error)
                 }
-            } else{
+            }else{
                 filterChain.doFilter(request,response)
             }
         }

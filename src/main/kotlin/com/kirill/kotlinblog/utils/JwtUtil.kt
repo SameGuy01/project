@@ -14,17 +14,16 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import java.util.*
 import java.util.stream.Collectors
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
-class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
+class JwtUtil(@Value("\${kotlin-blog.jwt.secret}") val tokenTime: Int) {
     fun refreshToken(
             request:HttpServletRequest,
             response:HttpServletResponse,
             userService: UserService
     ) {
-        val tokenTime = timeProperty.toLong()
         val authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
@@ -39,7 +38,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
                         .withSubject(user.username)
                         .withExpiresAt(Date(System.currentTimeMillis() + tokenTime))
                         .withIssuer(request.requestURL.toString())
-                        .withClaim("roles", user.roles.stream().map { it.role.name }.collect(Collectors.toList()))
+                        .withClaim("roles", user.roles.map { it.role.name })
                     .sign(algorithm)
 
                 val tokens = hashMapOf<String, String>()
@@ -66,7 +65,6 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
         request: HttpServletRequest,
         response: HttpServletResponse
     ) {
-        val tokenTime = timeProperty.toLong()
         val user = authentication.principal as User
         val algorithm = Algorithm.HMAC256("secret".toByteArray())
 
@@ -76,7 +74,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
             .withIssuer(request.requestURL.toString())
             .withClaim(
                 "roles",
-                user.authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())
+                user.authorities.map(GrantedAuthority::getAuthority)
             )
             .sign(algorithm)
 
@@ -86,9 +84,7 @@ class JwtUtil(@Value("kotlin-blog.jwt.token-time") var timeProperty: String) {
             .withIssuer(request.requestURL.toString())
             .sign(algorithm)
 
-        val tokens = hashMapOf<String, String>()
-        tokens["access_token"] = accessToken
-        tokens["refresh_token"] = refreshToken
+        val tokens = hashMapOf<String, String>("access_token" to accessToken, "refresh_token" to refreshToken)
 
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         ObjectMapper().writeValue(response.outputStream, tokens)

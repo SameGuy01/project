@@ -1,5 +1,12 @@
 package com.kirill.kotlinblog
 
+import com.kirill.kotlinblog.domain.Role
+import com.kirill.kotlinblog.domain.User
+import com.kirill.kotlinblog.domain.enum.ERole
+import com.kirill.kotlinblog.repository.UserRepository
+import com.kirill.kotlinblog.service.UserService
+import org.modelmapper.ModelMapper
+import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -10,8 +17,11 @@ class KotlinBlogApplication {
 	@Bean
 	fun passwordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder()
 
-	/*@Bean
-	fun run(userService: UserService) = CommandLineRunner {
+	@Bean
+	fun run(userService: UserService, userRepository: UserRepository) = CommandLineRunner {
+		if (userRepository.findById(1).isPresent)
+			return@CommandLineRunner
+
 		userService.saveRole(Role(1, ERole.ROLE_ADMIN))
 		userService.saveRole(Role(2, ERole.ROLE_USER))
 		userService.saveRole(Role(3, ERole.ROLE_MODERATOR))
@@ -22,11 +32,8 @@ class KotlinBlogApplication {
 
 		userService.addRoleToUser("sameguy01", ERole.ROLE_ADMIN)
 		userService.addRoleToUser("sameguy01", ERole.ROLE_MODERATOR)
-		userService.addRoleToUser("sameguy01", ERole.ROLE_USER)
-		userService.addRoleToUser("chelik228", ERole.ROLE_USER)
 		userService.addRoleToUser("vasya", ERole.ROLE_MODERATOR)
-		userService.addRoleToUser("vasya", ERole.ROLE_USER)
-	}*/
+	}
 }
 
 fun main(args: Array<String>) {

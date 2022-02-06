@@ -22,23 +22,23 @@ data class SecurityConfig(
     val jwtUtils: JwtUtil) : WebSecurityConfigurerAdapter(){
 
 
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth?.userDetailsService(userDetailsService)?.passwordEncoder(bCryptPasswordEncoder)
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
     }
 
     override fun configure(http: HttpSecurity) {
         val customAuthenticationFilter = CustomAuthenticationFilter(authenticationManagerBean(),jwtUtils)
-        http.logout().logoutUrl("/api/logout")
         customAuthenticationFilter.setFilterProcessesUrl("/api/login")
+        http.logout().logoutUrl("/api/logout")
         http.csrf().disable()
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.authorizeRequests().antMatchers("/api/login/**","/api/token/refresh/**","/api/logout").permitAll()
-        //http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/users/**").hasAnyAuthority("ROLE_USER")
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/users/**").hasAnyAuthority("ROLE_USER")
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/users/save/**").permitAll()
+        //.hasAnyAuthority("ROLE_ADMIN")
+        http.authorizeRequests().anyRequest().authenticated()
         http.addFilter(customAuthenticationFilter)
         http.addFilterBefore(CustomAuthorizationFilter(),UsernamePasswordAuthenticationFilter::class.java)
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/users/save/**").permitAll()
-            //.hasAnyAuthority("ROLE_ADMIN")
-        http.authorizeRequests().anyRequest().authenticated()
     }
 
     @Bean
